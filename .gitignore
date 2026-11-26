@@ -1,0 +1,25 @@
+# Игнорируем локальный .env (но разрешаем .env.example)
+.env
+!.env.example
+
+# Игнорируем содержимое папок первого уровня
+outputs/*
+custom_nodes/*
+user/*
+
+# Разрешаем .gitkeep в папках первого уровня
+!outputs/.gitkeep
+!custom_nodes/.gitkeep
+!user/.gitkeep
+
+# Для volumes игнорируем содержимое всех вложенных подпапок (чтобы не залить модели)
+volumes/*/*
+
+# Разрешаем .gitkeep во всех подпапках volumes
+!volumes/*/.gitkeep
+
+# Системный мусор Windows и IDE
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/

@@ -1,0 +1,26 @@
+services:
+  comfyui:
+    image: image: ghcr.io/ai-dock/comfyui:pytorch-2.4.1-py3.10-v2-cuda-12.1.1-base-22.04
+    container_name: comfyui
+
+    ports:
+      - "3000:8188"
+
+    volumes:
+      - ./volumes/checkpoints:/opt/ComfyUI/models/checkpoints:ro
+      - ./outputs:/opt/ComfyUI/output:rw
+      - ./custom_nodes:/opt/ComfyUI/custom_nodes:rw
+      - ./user:/opt/ComfyUI/user:rw
+      - ./volumes/loras:/opt/ComfyUI/models/loras:ro
+
+    environment:
+      COMFYUI_ARGS: "--highvram --fp16-vae"
+      WEB_ENABLE_AUTH: "false"
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
